@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DPI factice — test de l'extension Documenter</title>
+<style>
+	* { box-sizing: border-box; }
+	body {
+		font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+		max-width: 1200px; margin: 1.5rem auto; padding: 0 1rem;
+		font-size: 14px; color: #222; background: #f6f6f4;
+	}
+	header { margin-bottom: 1rem; }
+	h1 { font-size: 1.2rem; margin: 0 0 .2rem; }
+	.patient { color: #555; font-size: .85rem; margin: 0; }
+	.patient b { color: #222; }
+
+	.howto {
+		background: #fff; border: 1px solid #d8d8d4; border-left: 3px solid #6D8D88;
+		border-radius: 5px; padding: .8rem 1rem; margin: 1rem 0 1.25rem; font-size: .84rem; line-height: 1.5;
+	}
+	.howto h2 { font-size: .85rem; margin: 0 0 .4rem; }
+	.howto ol { margin: .3rem 0 .5rem; padding-left: 1.2rem; }
+	.howto li { margin-bottom: .2rem; }
+	.howto code { background: #f0f0ee; padding: .05rem .3rem; border-radius: 3px; font-size: .95em; }
+	.howto .warn { color: #a8761f; }
+
+	.grid { columns: 340px 3; column-gap: .8rem; }
+	section {
+		border: 1px solid #d8d8d4; border-radius: 5px; padding: .65rem .75rem .75rem;
+		background: #fff; break-inside: avoid; -webkit-column-break-inside: avoid;
+		width: 100%; margin-bottom: .8rem;
+	}
+	section > h2 { margin: 0 0 .45rem; font-size: .82rem; font-weight: 700; color: #444; }
+	label { display: block; font-size: .76rem; color: #555; margin: .45rem 0 .15rem; }
+	label:first-of-type { margin-top: 0; }
+	input[type="text"], textarea, .rich {
+		width: 100%; font: inherit; font-size: .85rem; padding: .35rem .45rem;
+		border: 1px solid #c4c4c0; border-radius: 3px; background: #fff; color: #222;
+	}
+	textarea { min-height: 4.5rem; resize: vertical; }
+	.rich { min-height: 4.5rem; }
+	input[readonly] { background: #f2f2f0; color: #777; }
+	.hint { font-size: .72rem; color: #888; margin: .15rem 0 0; }
+	fieldset { border: 1px solid #e2e2de; border-radius: 4px; padding: .5rem .6rem .6rem; margin: .5rem 0 0; }
+	legend { font-size: .74rem; color: #666; padding: 0 .3rem; }
+	iframe { width: 100%; height: 168px; border: 1px solid #c4c4c0; border-radius: 3px; background: #fff; }
+
+	.limits { background: #fff; border: 1px solid #d8d8d4; border-radius: 5px; padding: .7rem .9rem; margin-top: .5rem; font-size: .8rem; line-height: 1.5; }
+	.limits h2 { font-size: .82rem; margin: 0 0 .35rem; }
+	.limits ul { margin: .2rem 0 0; padding-left: 1.1rem; }
+	.tools { margin: 1rem 0 .5rem; }
+	button {
+		font: inherit; font-size: .82rem; padding: .4rem .8rem; border-radius: 4px;
+		border: 1px solid #c4c4c0; background: #fff; cursor: pointer;
+	}
+	button:hover { background: #f2f2f0; }
+	footer { margin-top: 1.5rem; font-size: .75rem; color: #888; }
+</style>
+</head>
+<body>
+
+<header>
+	<h1>Cabinet médical — Dossier patient informatisé</h1>
+	<p class="patient">Patient&nbsp;: <b>MARTIN, Jean</b> (fictif) · né le 04.03.1961 · Consultation du jour</p>
+</header>
+
+<div class="howto">
+	<h2>Comment tester l'extension avec cette page</h2>
+	<ol>
+		<li>Ouvrez <b>Documenter</b> dans un onglet et générez un rapport de consultation.</li>
+		<li>Revenez sur <b>cette page</b>, ouvrez le panneau de l'extension et lancez la configuration.</li>
+		<li>Pour chaque section proposée, cliquez le champ correspondant ci-dessous. Une seule fois&nbsp;: les champs sont mémorisés.</li>
+		<li>Cliquez <b>Remplir le dossier</b>, puis vérifiez chaque champ. <b>Annuler le remplissage</b> doit tout remettre en état.</li>
+	</ol>
+	<p class="warn"><b>Si rien ne se passe&nbsp;:</b> vérifiez que l'extension est bien installée et activée, puis rechargez cette page — une extension ne s'attache à un onglet qu'au chargement. Si vous avez enregistré cette page sur votre ordinateur, rouvrez-la depuis son adresse web&nbsp;: l'extension ne reconnaît pas les fichiers locaux.</p>
+	<p style="margin:.4rem 0 0">Aucune donnée n'est envoyée nulle part&nbsp;: cette page ne contient aucun script réseau, et le patient est inventé. Écrivez ce que vous voulez dedans.</p>
+</div>
+
+<div class="tools">
+	<button type="button" id="clear-all">Tout effacer (recommencer un test)</button>
+	<button type="button" id="fill-doctor">Remettre le texte «&nbsp;déjà saisi&nbsp;»</button>
+</div>
+
+<div class="grid">
+
+	<section>
+		<h2>1. Motif et anamnèse</h2>
+		<label for="motif">Motif de consultation</label>
+		<input type="text" id="motif" name="motif">
+		<label for="anamnese">Anamnèse</label>
+		<textarea id="anamnese" name="anamnese"></textarea>
+		<p class="hint">Champs vides&nbsp;: le remplissage doit écrire directement.</p>
+	</section>
+
+	<section>
+		<h2>2. Examen clinique</h2>
+		<label for="examen">Examen clinique</label>
+		<div class="rich" id="examen" contenteditable="true" role="textbox" aria-label="Examen clinique"></div>
+		<p class="hint">Champ de texte enrichi (comme dans beaucoup de DPI).</p>
+	</section>
+
+	<section>
+		<h2>3. Diagnostic</h2>
+		<label for="diagnostic">Diagnostic principal</label>
+		<input type="text" id="diagnostic" name="diagnostic">
+		<label for="cim10">Code CIM-10</label>
+		<input type="text" id="cim10" name="cim10" placeholder="p. ex. I10">
+		<p class="hint">Deux champs dans la même carte&nbsp;: l'extension ne doit pas les confondre.</p>
+	</section>
+
+	<section>
+		<h2>4. Traitement</h2>
+		<label for="traitement">Traitement prescrit</label>
+		<textarea id="traitement" name="traitement"></textarea>
+		<label for="allergies">Allergies connues</label>
+		<input type="text" id="allergies" name="allergies" value="Pas d'allergie connue">
+		<p class="hint">«&nbsp;Allergies&nbsp;» contient déjà une négation. Si votre rapport mentionne une allergie, elle doit être <b>ajoutée</b>, jamais ignorée.</p>
+	</section>
+
+	<section>
+		<h2>5. Champ déjà rempli</h2>
+		<label for="notes-existantes">Notes du médecin</label>
+		<textarea id="notes-existantes" name="notes-existantes">Patient vu en urgence, tension 150/95.</textarea>
+		<p class="hint">Le texte existant doit survivre intact. L'extension ajoute à la suite et signale «&nbsp;Ajouté&nbsp;».</p>
+	</section>
+
+	<section>
+		<h2>6. Champ verrouillé</h2>
+		<label for="verrouille">Validé par le médecin traitant</label>
+		<input type="text" id="verrouille" name="verrouille" value="Dr. Muster — 12.03.2026" readonly>
+		<p class="hint">En lecture seule&nbsp;: doit être refusé proprement, jamais écrasé.</p>
+	</section>
+
+	<section>
+		<h2>7. Suivi (cadre séparé)</h2>
+		<iframe title="Suivi" srcdoc='&lt;!DOCTYPE html&gt;&lt;html lang="fr"&gt;&lt;head&gt;&lt;meta charset="utf-8"&gt;&lt;style&gt;body{font-family:system-ui,sans-serif;font-size:14px;margin:.5rem;color:#222}label{display:block;font-size:.76rem;color:#555;margin:0 0 .15rem}textarea{width:100%;font:inherit;font-size:.85rem;padding:.35rem .45rem;border:1px solid #c4c4c0;border-radius:3px;min-height:5.5rem}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;label for="suivi"&gt;Plan de suivi&lt;/label&gt;&lt;textarea id="suivi" name="suivi"&gt;&lt;/textarea&gt;&lt;/body&gt;&lt;/html&gt;'></iframe>
+		<p class="hint">Ce champ vit dans un cadre séparé, comme dans plusieurs DPI suisses. Il doit se mapper et se remplir comme les autres.</p>
+	</section>
+
+	<section>
+		<h2>8. Deux champs, même libellé</h2>
+		<fieldset>
+			<legend>Consultation précédente</legend>
+			<label for="notes-prec">Notes</label>
+			<textarea id="notes-prec" name="notes-prec"></textarea>
+		</fieldset>
+		<fieldset>
+			<legend>Consultation actuelle</legend>
+			<label for="notes-act">Notes</label>
+			<textarea id="notes-act" name="notes-act"></textarea>
+		</fieldset>
+		<p class="hint">Libellés identiques. L'extension doit <b>refuser</b> plutôt que deviner (voir limites connues).</p>
+	</section>
+
+</div>
+
+<div class="limits">
+	<h2>Limites connues — inutile de les signaler</h2>
+	<ul>
+		<li><b>Deux champs au même libellé</b> (carte 8)&nbsp;: l'extension refuse au lieu de choisir. C'est volontaire — remplir le mauvais champ serait pire.</li>
+		<li><b>Champs en Shadow DOM</b>&nbsp;: pas encore pris en charge. Cette page n'en contient pas.</li>
+		<li><b>Champ verrouillé</b> (carte 6)&nbsp;: ne peut pas être appris du tout, le clic ne fait rien.</li>
+	</ul>
+	<p style="margin:.5rem 0 0">Tout le reste qui ne marche pas nous intéresse&nbsp;: dites-nous quel champ, ce que vous attendiez et ce qui s'est passé.</p>
+</div>
+
+<footer>Page de test factice pour l'extension Documenter. Patient et contenu inventés. Aucun appel réseau.</footer>
+
+<script>
+	// The two buttons exist so a tester can run the flow repeatedly without reloading and
+	// re-teaching. Nothing here talks to the extension.
+	const DOCTOR_TEXT = 'Patient vu en urgence, tension 150/95.';
+	document.getElementById('clear-all').addEventListener('click', () => {
+		document.querySelectorAll('input[type="text"]:not([readonly]), textarea').forEach((el) => { el.value = ''; });
+		document.querySelectorAll('[contenteditable="true"]').forEach((el) => { el.textContent = ''; });
+		const f = document.querySelector('iframe');
+		const inner = f && f.contentDocument && f.contentDocument.getElementById('suivi');
+		if (inner) inner.value = '';
+		document.getElementById('allergies').value = "Pas d'allergie connue";
+	});
+	document.getElementById('fill-doctor').addEventListener('click', () => {
+		document.getElementById('notes-existantes').value = DOCTOR_TEXT;
+	});
+</script>
+
+</body>
+</html>
