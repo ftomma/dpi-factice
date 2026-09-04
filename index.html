@@ -91,19 +91,32 @@
 		<input type="text" id="motif" name="motif">
 		<label for="anamnese">Anamnèse</label>
 		<textarea id="anamnese" name="anamnese"></textarea>
+		<label for="antecedents">Antécédents</label>
+		<textarea id="antecedents" name="antecedents"></textarea>
 		<p class="hint">Champs vides&nbsp;: le remplissage doit écrire directement.</p>
 	</section>
 
 	<section>
-		<h2>2. Examen clinique</h2>
-		<label for="examen">Examen clinique</label>
-		<div class="rich" id="examen" contenteditable="true" role="textbox" aria-label="Examen clinique"></div>
-		<p class="hint">Champ de texte enrichi (comme dans beaucoup de DPI).</p>
+		<h2>2. Allergies et traitement</h2>
+		<label for="allergies">Allergies</label>
+		<input type="text" id="allergies" name="allergies" value="Pas d'allergie connue">
+		<label for="traitement">Traitement actuel</label>
+		<textarea id="traitement" name="traitement"></textarea>
+		<p class="hint">«&nbsp;Allergies&nbsp;» contient déjà une négation. Si votre rapport mentionne une allergie, elle doit être <b>ajoutée</b>, jamais ignorée.</p>
 	</section>
 
 	<section>
-		<h2>3. Diagnostic</h2>
-		<label for="diagnostic">Diagnostic principal</label>
+		<h2>3. Examen</h2>
+		<label for="examen">Examen clinique</label>
+		<div class="rich" id="examen" contenteditable="true" role="textbox" aria-label="Examen clinique"></div>
+		<label for="examens-complementaires">Examens complémentaires</label>
+		<textarea id="examens-complementaires" name="examens-complementaires"></textarea>
+		<p class="hint">«&nbsp;Examen clinique&nbsp;» est un champ de texte enrichi, comme dans beaucoup de DPI. Les deux libellés se ressemblent&nbsp;: l'extension ne doit pas les confondre.</p>
+	</section>
+
+	<section>
+		<h2>4. Diagnostic</h2>
+		<label for="diagnostic">Diagnostic</label>
 		<input type="text" id="diagnostic" name="diagnostic">
 		<label for="cim10">Code CIM-10</label>
 		<input type="text" id="cim10" name="cim10" placeholder="p. ex. I10">
@@ -111,36 +124,35 @@
 	</section>
 
 	<section>
-		<h2>4. Traitement</h2>
-		<label for="traitement">Traitement prescrit</label>
-		<textarea id="traitement" name="traitement"></textarea>
-		<label for="allergies">Allergies connues</label>
-		<input type="text" id="allergies" name="allergies" value="Pas d'allergie connue">
-		<p class="hint">«&nbsp;Allergies&nbsp;» contient déjà une négation. Si votre rapport mentionne une allergie, elle doit être <b>ajoutée</b>, jamais ignorée.</p>
+		<h2>5. Discussion et propositions</h2>
+		<label for="discussion">Discussion</label>
+		<textarea id="discussion" name="discussion"></textarea>
+		<label for="propositions">Propositions</label>
+		<textarea id="propositions" name="propositions"></textarea>
 	</section>
 
 	<section>
-		<h2>5. Champ déjà rempli</h2>
+		<h2>6. Suivi (cadre séparé)</h2>
+		<iframe title="Suivi" src="frame-suivi.html"></iframe>
+		<p class="hint">Ce champ vit dans un cadre séparé (un vrai document), comme dans plusieurs DPI suisses. Il doit se mapper et se remplir comme les autres.</p>
+	</section>
+
+	<section>
+		<h2>7. Champ déjà rempli</h2>
 		<label for="notes-existantes">Notes du médecin</label>
 		<textarea id="notes-existantes" name="notes-existantes">Patient vu en urgence, tension 150/95.</textarea>
 		<p class="hint">Le texte existant doit survivre intact. L'extension ajoute à la suite et signale «&nbsp;Ajouté&nbsp;».</p>
 	</section>
 
 	<section>
-		<h2>6. Champ verrouillé</h2>
+		<h2>8. Champ verrouillé</h2>
 		<label for="verrouille">Validé par le médecin traitant</label>
 		<input type="text" id="verrouille" name="verrouille" value="Dr. Muster — 12.03.2026" readonly>
 		<p class="hint">En lecture seule&nbsp;: doit être refusé proprement, jamais écrasé.</p>
 	</section>
 
 	<section>
-		<h2>7. Suivi (cadre séparé)</h2>
-		<iframe title="Suivi" src="frame-suivi.html"></iframe>
-		<p class="hint">Ce champ vit dans un cadre séparé (un vrai document), comme dans plusieurs DPI suisses. Il doit se mapper et se remplir comme les autres.</p>
-	</section>
-
-	<section>
-		<h2>8. Deux champs, même libellé</h2>
+		<h2>9. Deux champs, même libellé</h2>
 		<fieldset>
 			<legend>Consultation précédente</legend>
 			<label for="notes-prec">Notes</label>
@@ -159,9 +171,9 @@
 <div class="limits">
 	<h2>Limites connues — inutile de les signaler</h2>
 	<ul>
-		<li><b>Deux champs au même libellé</b> (carte 8)&nbsp;: l'extension refuse au lieu de choisir. C'est volontaire — remplir le mauvais champ serait pire.</li>
+		<li><b>Deux champs au même libellé</b> (carte 9)&nbsp;: l'extension refuse au lieu de choisir. C'est volontaire — remplir le mauvais champ serait pire.</li>
 		<li><b>Champs en Shadow DOM</b>&nbsp;: pas encore pris en charge. Cette page n'en contient pas.</li>
-		<li><b>Champ verrouillé</b> (carte 6)&nbsp;: ne peut pas être appris du tout, le clic ne fait rien.</li>
+		<li><b>Champ verrouillé</b> (carte 8)&nbsp;: ne peut pas être appris du tout, le clic ne fait rien.</li>
 	</ul>
 	<p style="margin:.5rem 0 0">Tout le reste qui ne marche pas nous intéresse&nbsp;: dites-nous quel champ, ce que vous attendiez et ce qui s'est passé.</p>
 </div>
