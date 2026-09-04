@@ -118,9 +118,6 @@
 		<h2>4. Diagnostic</h2>
 		<label for="diagnostic">Diagnostic</label>
 		<input type="text" id="diagnostic" name="diagnostic">
-		<label for="cim10">Code CIM-10</label>
-		<input type="text" id="cim10" name="cim10" placeholder="p. ex. I10">
-		<p class="hint">Deux champs dans la même carte&nbsp;: l'extension ne doit pas les confondre.</p>
 	</section>
 
 	<section>
@@ -151,27 +148,11 @@
 		<p class="hint">En lecture seule&nbsp;: doit être refusé proprement, jamais écrasé.</p>
 	</section>
 
-	<section>
-		<h2>9. Deux champs, même libellé</h2>
-		<fieldset>
-			<legend>Consultation précédente</legend>
-			<label for="notes-prec">Notes</label>
-			<textarea id="notes-prec" name="notes-prec"></textarea>
-		</fieldset>
-		<fieldset>
-			<legend>Consultation actuelle</legend>
-			<label for="notes-act">Notes</label>
-			<textarea id="notes-act" name="notes-act"></textarea>
-		</fieldset>
-		<p class="hint">Libellés identiques. L'extension doit <b>refuser</b> plutôt que deviner (voir limites connues).</p>
-	</section>
-
 </div>
 
 <div class="limits">
 	<h2>Limites connues — inutile de les signaler</h2>
 	<ul>
-		<li><b>Deux champs au même libellé</b> (carte 9)&nbsp;: l'extension refuse au lieu de choisir. C'est volontaire — remplir le mauvais champ serait pire.</li>
 		<li><b>Champs en Shadow DOM</b>&nbsp;: pas encore pris en charge. Cette page n'en contient pas.</li>
 		<li><b>Champ verrouillé</b> (carte 8)&nbsp;: ne peut pas être appris du tout, le clic ne fait rien.</li>
 	</ul>
