@@ -9,5 +9,3 @@ Le patient et tout le contenu sont inventés. La page ne contient aucun appel r�
 Les champs reprennent les onze sections d'un rapport de consultation Documenter — Motif de consultation, Anamnèse, Antécédents, Allergies, Traitement actuel, Examen clinique, Examens complémentaires, Diagnostic, Discussion, Propositions, Suivi — pour que chaque section proposée par l'extension ait un champ à mapper.
 
 Elle couvre les cas qui comptent : champs vides, champ déjà rempli (le texte existant doit survivre), champ verrouillé, texte enrichi, un champ dans un cadre séparé, et un champ « Allergies » contenant une négation — si le rapport mentionne une allergie, elle doit être ajoutée, jamais ignorée.
-
-Les limites connues sont listées en bas de la page : inutile de les signaler.
